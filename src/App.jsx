@@ -40,9 +40,9 @@ import { DiDotnet } from "react-icons/di";
 
 function Skill({ icon, name }) {
   return (
-    <div className="flex flex-col items-center gap-2 hover:scale-110 transition">
+    <div className="flex flex-col items-center gap-2 transition hover:scale-110">
       <div className="text-3xl">{icon}</div>
-      <span className="text-xs text-gray-400 text-center">{name}</span>
+      <span className="text-xs text-center text-gray-400">{name}</span>
     </div>
   );
 }
@@ -68,19 +68,19 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 font-sans">
+    <div className="min-h-screen font-sans text-gray-100 bg-gray-950">
       {/* ================= NAVBAR ================= */}
-     <header className="fixed top-0 w-full bg-gray-950/80 backdrop-blur border-b border-gray-800 z-50">
-  <nav className="max-w-7xl mx-auto flex justify-between items-center p-4">
+     <header className="fixed top-0 z-50 w-full border-b border-gray-800 bg-gray-950/80 backdrop-blur">
+  <nav className="flex items-center justify-between p-4 mx-auto max-w-7xl">
     <h1 className="text-xl font-bold">Yash Jaiswal</h1>
 
     {/* Desktop Menu */}
-    <div className="hidden md:flex space-x-6 text-sm">
-      <a href="#about" className="hover:text-blue-400 transition-colors duration-300">About</a>
-      <a href="#skills" className="hover:text-blue-400 transition-colors duration-300">Skills</a>
-      <a href="#projects" className="hover:text-blue-400 transition-colors duration-300">Projects</a>
-      <a href="#education" className="hover:text-blue-400 transition-colors duration-300">Education</a>
-      <a href="#contact" className="hover:text-blue-400 transition-colors duration-300">Contact</a>
+    <div className="hidden space-x-6 text-sm md:flex">
+      <a href="#about" className="transition-colors duration-300 hover:text-blue-400">About</a>
+      <a href="#skills" className="transition-colors duration-300 hover:text-blue-400">Skills</a>
+      <a href="#projects" className="transition-colors duration-300 hover:text-blue-400">Projects</a>
+      <a href="#education" className="transition-colors duration-300 hover:text-blue-400">Education</a>
+      <a href="#contact" className="transition-colors duration-300 hover:text-blue-400">Contact</a>
     </div>
 
     {/* Mobile Button */}
@@ -92,7 +92,7 @@ export default function App() {
   {/* Mobile Drawer */}
   {open && (
     <div className="fixed inset-0 bg-black/70">
-      <div className="fixed right-0 top-0 h-full w-64 bg-gray-950 p-6">
+      <div className="fixed top-0 right-0 w-64 h-full p-6 bg-gray-950">
         <button
           className="absolute top-4 right-4"
           onClick={() => setOpen(false)}
@@ -100,14 +100,14 @@ export default function App() {
           <X />
         </button>
 
-        <div className="mt-12 flex flex-col gap-6 text-lg">
+        <div className="flex flex-col gap-6 mt-12 text-lg">
           {["about", "skills", "projects", "education", "contact"].map(
             (item) => (
               <a
                 key={item}
                 href={`#${item}`}
                 onClick={() => setOpen(false)}
-                className="hover:text-blue-400 transition-colors duration-300"
+                className="px-4 py-2 transition-all duration-300 bg-gray-900 rounded-lg hover:bg-gray-800 hover:text-blue-400"
               >
                 {item.toUpperCase()}
               </a>
@@ -121,14 +121,14 @@ export default function App() {
 
 
       {/* ================= HERO ================= */}
-      <section className="pt-32 pb-20 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <section className="grid items-center gap-10 px-6 pt-32 pb-20 mx-auto max-w-7xl md:grid-cols-2">
         <div>
           <h2 className="text-5xl font-bold">Full Stack Developer</h2>
           <p className="mt-6 text-gray-400">
            {typedText}
           </p>
 
-          <div className="mt-8 flex gap-4 flex-wrap">
+          <div className="flex flex-wrap gap-4 mt-8">
             <a
               href="#projects"
               className="px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
@@ -149,18 +149,16 @@ export default function App() {
           <img
             src="/profile.jpg"
             alt="Yash Jaiswal"
-            className="w-72 h-72 rounded-full object-cover border-4 border-gray-800 shadow-lg
-             transition-transform duration-300 hover:scale-105 hover:-translate-y-2
-             animate-float"
+            className="object-cover transition-transform duration-300 border-4 border-gray-800 rounded-full shadow-lg w-72 h-72 hover:scale-105 hover:-translate-y-2 animate-float"
           />
         </div>
       </section>
 
       {/* ================= ABOUT ================= */}
       <section id="about" className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <h3 className="text-3xl font-semibold mb-6">About Me</h3>
-          <p className="text-gray-400 max-w-3xl">
+        <div className="px-6 mx-auto max-w-7xl">
+          <h3 className="mb-6 text-3xl font-semibold">About Me</h3>
+          <p className="max-w-3xl text-gray-400">
             I am a Computer Engineering student at RK University. I have
             experience in full-stack development using MERN, backend development
             with Java and PHP, and mobile app development using Flutter. I enjoy
@@ -170,12 +168,12 @@ export default function App() {
       </section>
 
       {/* ================= SKILLS ================= */}
-      <section id="skills" className="py-20 max-w-7xl mx-auto px-6">
-        <h3 className="text-3xl font-semibold mb-10">Technical Skills</h3>
+      <section id="skills" className="px-6 py-20 mx-auto max-w-7xl">
+        <h3 className="mb-10 text-3xl font-semibold">Technical Skills</h3>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-3">
           {/* Languages */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">Languages</h4>
             <div className="flex flex-wrap gap-6">
               <Skill icon={<SiPython />} name="Python" />
@@ -187,7 +185,7 @@ export default function App() {
           </div>
 
           {/* Frontend */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">Frontend</h4>
             <div className="flex flex-wrap gap-6">
               <Skill icon={<FaHtml5 />} name="HTML" />
@@ -201,7 +199,7 @@ export default function App() {
           </div>
 
           {/* Backend */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">Backend</h4>
             <div className="flex flex-wrap gap-6">
               <Skill icon={<SiNodedotjs />} name="Node.js" />
@@ -213,7 +211,7 @@ export default function App() {
           </div>
 
           {/* Databases */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">Databases</h4>
             <div className="flex flex-wrap gap-6">
               <Skill icon={<SiMongodb />} name="MongoDB" />
@@ -224,13 +222,13 @@ export default function App() {
           </div>
 
           {/* Mobile */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">App Development</h4>
             <Skill icon={<SiFlutter />} name="Flutter" />
           </div>
 
           {/* AI Tools */}
-          <div className="bg-gray-900 p-6 rounded-xl">
+          <div className="p-6 bg-gray-900 rounded-xl">
             <h4 className="mb-4 font-semibold">AI & Tools</h4>
             <div className="flex flex-wrap gap-6">
               <Skill icon={<SiOpenai />} name="OpenAI" />
@@ -248,38 +246,38 @@ export default function App() {
       {/* ================= PROJECTS ================= */}
       <section id="projects" className="py-20 bg-gray-900">
         {" "}
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="px-6 mx-auto max-w-7xl">
           {" "}
-          <h3 className="text-3xl font-semibold mb-10">Projects</h3>{" "}
-          <div className="grid md:grid-cols-2 gap-8">
+          <h3 className="mb-10 text-3xl font-semibold">Projects</h3>{" "}
+          <div className="grid gap-8 md:grid-cols-2">
             {" "}
-            <div className="bg-gray-950 border border-gray-800 rounded-xl p-6">
+            <div className="p-6 border border-gray-800 bg-gray-950 rounded-xl">
               {" "}
               <h4 className="text-xl font-semibold">
                 College Management System
               </h4>{" "}
-              <p className="text-gray-400 mt-2">
+              <p className="mt-2 text-gray-400">
                 {" "}
                 Full-stack web application using HTML, Bootstrap, JavaScript,
                 and PHP. Worked as backend developer and implemented payment
                 system and online verification.{" "}
               </p>{" "}
             </div>{" "}
-            <div className="bg-gray-950 border border-gray-800 rounded-xl p-6">
+            <div className="p-6 border border-gray-800 bg-gray-950 rounded-xl">
               {" "}
               <h4 className="text-xl font-semibold">Blood Donation App</h4>{" "}
-              <p className="text-gray-400 mt-2">
+              <p className="mt-2 text-gray-400">
                 {" "}
                 Flutter app with Firebase Authentication and Firestore allowing
                 users to donate or request blood.{" "}
               </p>{" "}
             </div>{" "}
-            <div className="bg-gray-950 border border-gray-800 rounded-xl p-6">
+            <div className="p-6 border border-gray-800 bg-gray-950 rounded-xl">
               {" "}
               <h4 className="text-xl font-semibold">
                 Online Learning Platform (MERN Stack & Java Development)
               </h4>{" "}
-              <p className="text-gray-400 mt-2">
+              <p className="mt-2 text-gray-400">
                 {" "}
                 MERN stack application with JWT authentication, REST APIs,
                 Tailwind UI, and course enrollment.{" "}<br /><br />
@@ -288,10 +286,10 @@ export default function App() {
 
               </p>{" "}
             </div>{" "}
-            <div className="bg-gray-950 border border-gray-800 rounded-xl p-6">
+            <div className="p-6 border border-gray-800 bg-gray-950 rounded-xl">
               {" "}
               <h4 className="text-xl font-semibold">TextUtils</h4>{" "}
-              <p className="text-gray-400 mt-2">
+              <p className="mt-2 text-gray-400">
                 {" "}
                 React SPA for live text manipulation with dark/light mode,
                 clipboard support, and real-time statistics.{" "}
@@ -304,9 +302,9 @@ export default function App() {
       {/* ================= EDUCATION ================= */}
       <section id="education" className="py-20">
         {" "}
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="px-6 mx-auto max-w-7xl">
           {" "}
-          <h3 className="text-3xl font-semibold mb-6">Education</h3>{" "}
+          <h3 className="mb-6 text-3xl font-semibold">Education</h3>{" "}
           <div className="space-y-4 text-gray-400">
             {" "}
             <p>
@@ -330,8 +328,8 @@ export default function App() {
 
       {/* ================= CONTACT ================= */}
       <section id="contact" className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <h3 className="text-3xl font-semibold mb-6">Contact</h3>
+        <div className="px-6 mx-auto max-w-7xl">
+          <h3 className="mb-6 text-3xl font-semibold">Contact</h3>
 
           <div className="flex flex-wrap gap-6 text-gray-400">
             <span className="flex items-center gap-2 ">
