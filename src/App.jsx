@@ -107,7 +107,7 @@ export default function App() {
                 key={item}
                 href={`#${item}`}
                 onClick={() => setOpen(false)}
-                className="px-4 py-2 transition-all duration-300 bg-gray-900 rounded-lg hover:bg-gray-800 hover:text-blue-400"
+                className="px-4 py-2 transition-all duration-300 bg-blue-600 rounded-lg hover:bg-gray-800 hover:text-blue-400"
               >
                 {item.toUpperCase()}
               </a>
