@@ -8,10 +8,15 @@ import SkillsSection from "./components/SkillsSection";
 import EducationSection from "./components/EducationSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import AboutSection from "./components/AboutSection";
+import TrailCursor from "./components/TrailCursor";
 
 // Import utilities and data
 import useTyping from "./utils/useTyping";
 import { projects } from "./data/projectsData";
+
+// Import global styles
+import { globalStyles } from "./utils/globalStyles";
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -21,135 +26,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden font-sans text-gray-100 bg-gray-950">
-      {/* Add custom animation styles */}
-      <style jsx global>{`
-        @keyframes slideInFromLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
+      {/* Global Styles */}
+      <style jsx global>{globalStyles}</style>
 
-        @keyframes slideInFromRight {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideOutToLeft {
-          from {
-            opacity: 1;
-            transform: translateX(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-        }
-
-        @keyframes slideOutToRight {
-          from {
-            opacity: 1;
-            transform: translateX(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-        }
-
-        @keyframes scrollLeftToRight {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        @keyframes scrollRightToLeft {
-          0% {
-            transform: translateX(-50%);
-          }
-          100% {
-            transform: translateX(0%);
-          }
-        }
-
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideOut {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(100%);
-          }
-        }
-
-        .animate-slideIn {
-          animation: slideIn 0.3s ease-out forwards;
-        }
-
-        .animate-slideOut {
-          animation: slideOut 0.3s ease-in forwards;
-        }
-
-        .animate-slideInFromLeft {
-          animation: slideInFromLeft 0.5s ease-out forwards;
-        }
-
-        .animate-slideInFromRight {
-          animation: slideInFromRight 0.5s ease-out forwards;
-        }
-
-        .animate-slideOutToLeft {
-          animation: slideOutToLeft 0.3s ease-in forwards;
-        }
-
-        .animate-slideOutToRight {
-          animation: slideOutToRight 0.3s ease-in forwards;
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .line-clamp-none {
-          -webkit-line-clamp: unset;
-        }
-      `}</style>
+      {/* Canvas Cursor */}
+      <TrailCursor />
 
       {/* ================= NAVBAR ================= */}
       <header className="fixed top-0 z-50 w-full overflow-x-hidden border-b border-gray-800 bg-gray-950/95 backdrop-blur-lg">
@@ -159,7 +40,7 @@ export default function App() {
           {/* Desktop Menu */}
           <div className="hidden space-x-6 text-sm md:flex">
             <a
-              href="#about"
+              href="#about-section"
               className="transition-colors duration-300 hover:text-blue-400"
             >
               About
@@ -238,17 +119,7 @@ export default function App() {
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="py-20 overflow-x-hidden bg-gray-900">
-        <div className="px-4 mx-auto sm:px-6 max-w-7xl">
-          <h3 className="px-2 mb-6 text-2xl font-semibold sm:text-3xl">About Me</h3>
-          <p className="px-2 text-sm text-gray-400 sm:text-base">
-            I am a Computer Engineering student at RK University. I have
-            experience in full-stack development using MERN, backend development
-            with Java and PHP, and mobile app development using Flutter. I enjoy
-            building real-world applications and learning new technologies.
-          </p>
-        </div>
-      </section>
+      <AboutSection />
 
       {/* ================= SKILLS ================= */}
       <SkillsSection />

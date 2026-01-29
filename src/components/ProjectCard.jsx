@@ -14,6 +14,8 @@ export default function ProjectCard({
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState('down');
 
   useEffect(() => {
     const checkMobile = () => {
@@ -25,6 +27,22 @@ export default function ProjectCard({
     
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  useEffect(() => {
+    // Track scroll direction
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        setScrollDirection('down');
+      } else {
+        setScrollDirection('up');
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,9 +73,30 @@ export default function ProjectCard({
     };
   }, []);
 
-  const animationClass = index % 2 === 0 
-    ? (isVisible ? 'animate-slideInFromLeft' : 'animate-slideOutToLeft')
-    : (isVisible ? 'animate-slideInFromRight' : 'animate-slideOutToRight');
+  // Determine animation class based on index, visibility, and scroll direction
+  let animationClass = '';
+  
+  if (isVisible) {
+    if (index % 2 === 0) { // Even cards
+      if (scrollDirection === 'down') {
+        animationClass = 'animate-slideInFromLeftUp';
+      } else {
+        animationClass = 'animate-slideInFromLeftDown';
+      }
+    } else { // Odd cards
+      if (scrollDirection === 'down') {
+        animationClass = 'animate-slideInFromRightUp';
+      } else {
+        animationClass = 'animate-slideInFromRightDown';
+      }
+    }
+  } else {
+    if (index % 2 === 0) {
+      animationClass = 'animate-slideOutToLeft';
+    } else {
+      animationClass = 'animate-slideOutToRight';
+    }
+  }
 
   const resetClass = !isVisible && hasAnimated ? 'opacity-0' : '';
 

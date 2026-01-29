@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import { Cpu, Database } from "lucide-react";
 import {
   SiPython,
@@ -25,11 +26,57 @@ import { FaJava, FaHtml5 } from "react-icons/fa";
 import { DiDotnet } from "react-icons/di";
 
 /* ===== SKILL ITEM ===== */
-function Skill({ icon, name }) {
+function Skill({ icon, name, index }) {
+  const skillRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            setHasAnimated(true);
+          } else {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (skillRef.current) {
+      observer.observe(skillRef.current);
+    }
+
+    return () => {
+      if (skillRef.current) {
+        observer.unobserve(skillRef.current);
+      }
+    };
+  }, []);
+
+  const animationClass = index % 2 === 0 
+    ? (isVisible ? 'animate-slideInFromLeft' : 'animate-slideOutToLeft')
+    : (isVisible ? 'animate-slideInFromRight' : 'animate-slideOutToRight');
+
+  const resetClass = !isVisible && hasAnimated ? 'opacity-0' : '';
+
   return (
-    <div className="flex flex-col items-center flex-shrink-0 gap-2 px-2 transition hover:scale-110">
-      <div className="text-3xl">{icon}</div>
-      <span className="text-xs text-center text-gray-400 whitespace-nowrap">{name}</span>
+    <div 
+      ref={skillRef}
+      className={`flex flex-col items-center flex-shrink-0 gap-2 px-2 transition-all duration-500 hover:scale-110 ${animationClass} ${resetClass}`}
+      style={{
+        animationFillMode: 'forwards',
+        animationDuration: '0.5s'
+      }}
+    >
+      <div className="text-3xl transition-all duration-300 hover:text-blue-400">{icon}</div>
+      <span className="text-xs text-center text-gray-400 transition-all duration-300 whitespace-nowrap hover:text-gray-300">{name}</span>
     </div>
   );
 }
@@ -64,10 +111,56 @@ function MobileScrollingSkills({ skills, index }) {
   );
 }
 
-/* ===== DESKTOP STATIC SKILLS ===== */
-function DesktopSkills({ children }) {
+/* ===== DESKTOP STATIC SKILLS WITH ANIMATION ===== */
+function DesktopSkills({ children, index }) {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            setHasAnimated(true);
+          } else {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  const animationClass = index % 2 === 0 
+    ? (isVisible ? 'animate-slideInFromLeft' : 'animate-slideOutToLeft')
+    : (isVisible ? 'animate-slideInFromRight' : 'animate-slideOutToRight');
+
+  const resetClass = !isVisible && hasAnimated ? 'opacity-0' : '';
+
   return (
-    <div className="flex-wrap hidden gap-6 md:flex">
+    <div 
+      ref={sectionRef}
+      className={`hidden md:flex md:flex-wrap md:gap-6 transition-all duration-500 ${animationClass} ${resetClass}`}
+      style={{
+        animationFillMode: 'forwards',
+        animationDuration: '0.5s'
+      }}
+    >
       {children}
     </div>
   );
@@ -78,82 +171,134 @@ export const skillSections = [
   {
     title: "Languages",
     skills: [
-      <Skill key="python" icon={<SiPython />} name="Python" />,
-      <Skill key="javascript" icon={<SiJavascript />} name="JavaScript" />,
-      <Skill key="java" icon={<FaJava />} name="Java" />,
-      <Skill key="csharp" icon={<DiDotnet />} name="C#" />,
-      <Skill key="typescript" icon={<SiTypescript />} name="TypeScript" />,
+      { icon: <SiPython />, name: "Python" },
+      { icon: <SiJavascript />, name: "JavaScript" },
+      { icon: <FaJava />, name: "Java" },
+      { icon: <DiDotnet />, name: "C#" },
+      { icon: <SiTypescript />, name: "TypeScript" },
     ]
   },
   {
     title: "Frontend",
     skills: [
-      <Skill key="html" icon={<FaHtml5 />} name="HTML" />,
-      <Skill key="css" icon={<SiCss3 />} name="CSS" />,
-      <Skill key="react" icon={<SiReact />} name="React.js" />,
-      <Skill key="nextjs" icon={<SiNextdotjs />} name="Next.js" />,
-      <Skill key="tailwind" icon={<SiTailwindcss />} name="Tailwind CSS" />,
-      <Skill key="bootstrap" icon={<SiBootstrap />} name="Bootstrap" />,
-      <Skill key="jsp" icon={<Cpu />} name="JSP" />,
+      { icon: <FaHtml5 />, name: "HTML" },
+      { icon: <SiCss3 />, name: "CSS" },
+      { icon: <SiReact />, name: "React.js" },
+      { icon: <SiNextdotjs />, name: "Next.js" },
+      { icon: <SiTailwindcss />, name: "Tailwind CSS" },
+      { icon: <SiBootstrap />, name: "Bootstrap" },
+      { icon: <Cpu />, name: "JSP" },
     ]
   },
   {
     title: "Backend",
     skills: [
-      <Skill key="nodejs" icon={<SiNodedotjs />} name="Node.js" />,
-      <Skill key="express" icon={<SiExpress />} name="Express.js" />,
-      <Skill key="firebase" icon={<SiFirebase />} name="Firebase" />,
-      <Skill key="php" icon={<SiPhp />} name="PHP" />,
-      <Skill key="servlet" icon={<Cpu />} name="Servlet" />,
+      { icon: <SiNodedotjs />, name: "Node.js" },
+      { icon: <SiExpress />, name: "Express.js" },
+      { icon: <SiFirebase />, name: "Firebase" },
+      { icon: <SiPhp />, name: "PHP" },
+      { icon: <Cpu />, name: "Servlet" },
     ]
   },
   {
     title: "Databases",
     skills: [
-      <Skill key="mongodb" icon={<SiMongodb />} name="MongoDB" />,
-      <Skill key="mysql" icon={<SiMysql />} name="MySQL" />,
-      <Skill key="postgresql" icon={<SiPostgresql />} name="PostgreSQL" />,
-      <Skill key="mongoose" icon={<Database />} name="Mongoose" />,
+      { icon: <SiMongodb />, name: "MongoDB" },
+      { icon: <SiMysql />, name: "MySQL" },
+      { icon: <SiPostgresql />, name: "PostgreSQL" },
+      { icon: <Database />, name: "Mongoose" },
     ]
   },
   {
     title: "App Development",
     skills: [
-      <Skill key="flutter" icon={<SiFlutter />} name="Flutter" />,
+      { icon: <SiFlutter />, name: "Flutter" },
     ]
   },
   {
     title: "AI & Tools",
     skills: [
-      <Skill key="openai" icon={<SiOpenai />} name="OpenAI" />,
-      <Skill key="copilot" icon={<SiGithubcopilot />} name="GitHub Copilot" />,
-      <Skill key="gemini" icon={<SiGoogle />} name="Gemini" />,
-      <Skill key="cursor" icon={<Cpu />} name="Cursor" />,
-      <Skill key="blackbox" icon={<Cpu />} name="Blackbox" />,
-      <Skill key="llama" icon={<Cpu />} name="Llama 3" />,
-      <Skill key="deepseek" icon={<Cpu />} name="DeepSeek" />,
+      { icon: <SiOpenai />, name: "OpenAI" },
+      { icon: <SiGithubcopilot />, name: "GitHub Copilot" },
+      { icon: <SiGoogle />, name: "Gemini" },
+      { icon: <Cpu />, name: "Cursor" },
+      { icon: <Cpu />, name: "Blackbox" },
+      { icon: <Cpu />, name: "Llama 3" },
+      { icon: <Cpu />, name: "DeepSeek" },
     ]
   },
 ];
 
 // Skills Section Component
 export default function SkillsSection() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="skills" className="px-4 py-20 mx-auto overflow-x-hidden sm:px-6 max-w-7xl">
-      <h3 className="px-2 mb-10 text-2xl font-semibold sm:text-3xl">Technical Skills</h3>
+    <section id="skills" ref={sectionRef} className="px-4 py-20 mx-auto overflow-x-hidden sm:px-6 max-w-7xl">
+      <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <h3 className="px-2 mb-10 text-2xl font-semibold sm:text-3xl">Technical Skills</h3>
+      </div>
 
       <div className="grid gap-6 md:grid-cols-3">
         {skillSections.map((section, index) => (
-          <div key={index} className="p-4 overflow-hidden bg-gray-900 sm:p-6 rounded-xl">
-            <h4 className="mb-4 text-sm font-semibold sm:text-base">{section.title}</h4>
+          <div 
+            key={index} 
+            className="p-4 overflow-hidden transition-all duration-500 bg-gray-900 sm:p-6 rounded-xl hover:bg-gray-800/50 hover:border-blue-500/30 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-900/10 border border-gray-800"
+          >
+            <h4 className="mb-4 text-sm font-semibold transition-all duration-300 sm:text-base hover:text-blue-300">
+              {section.title}
+            </h4>
             
-            <DesktopSkills>
-              {section.skills}
+            <DesktopSkills index={index}>
+              {section.skills.map((skill, skillIndex) => (
+                <Skill 
+                  key={skillIndex} 
+                  icon={skill.icon} 
+                  name={skill.name} 
+                  index={skillIndex}
+                />
+              ))}
             </DesktopSkills>
             
             <div className="w-full overflow-hidden md:hidden">
               <MobileScrollingSkills 
-                skills={section.skills} 
+                skills={section.skills.map((skill, skillIndex) => (
+                  <Skill 
+                    key={skillIndex} 
+                    icon={skill.icon} 
+                    name={skill.name} 
+                    index={skillIndex}
+                  />
+                ))} 
                 index={index}
               />
             </div>

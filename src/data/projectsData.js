@@ -28,7 +28,7 @@ export const projects = [
       "Tailwind CSS",
       "JWT",
     ],
-    sourceCode: "https://github.com/yourusername/learning-platform",
+    sourceCode: "https://github.com/yashjaiswal4646/Online-Learning-React-",
   },
   {
     title: "Online Learning Platform (JAVA Web Development)",
@@ -40,7 +40,7 @@ export const projects = [
       "Servlet",
       "JDBC"
     ],
-    sourceCode: "https://github.com/yourusername/learning-platform",
+    sourceCode: "https://github.com/yashjaiswal4646/Online-Learning-Java",
   },
   {
     title: "TextUtils - Text Manipulation Tool",
@@ -48,6 +48,6 @@ export const projects = [
       "React SPA for live text manipulation with dark/light mode, clipboard support, and real-time statistics. Advanced text analysis features included.",
     image: "https://reactjsexample.com/content/images/2021/10/Screenshot--35-.png",
     technologies: ["React.js", "JavaScript", "CSS3", "Local Storage", "Clipboard API"],
-    sourceCode: "https://github.com/yourusername/textutils",
+    sourceCode: "https://github.com/yashjaiswal4646/TextUtils",
   },
 ];
