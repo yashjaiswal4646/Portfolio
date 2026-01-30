@@ -98,7 +98,7 @@ export default function ContactSection() {
         {/* Big Text Hire Me Section - Reduced height */}
         <div 
           ref={hireMeRef}
-          className="relative min-h-[50vh] flex items-center justify-center mb-6 overflow-hidden"
+          className="relative min-h-[40vh] flex items-center justify-center mb-6 overflow-hidden"
         >
           {/* Background overlay */}
           <div 
@@ -160,27 +160,27 @@ export default function ContactSection() {
           <div className="absolute w-32 h-32 delay-1000 rounded-full bottom-1/4 right-1/4 bg-purple-500/5 blur-2xl animate-pulse"></div>
         </div>
 
-        {/* Working Contact Form - Reduced top margin */}
+        {/* Working Contact Form - Increased height */}
         <div className="px-2 mt-8">
-          <div className="max-w-2xl mx-auto p-6 border border-gray-800 rounded-xl bg-gray-950 group hover:scale-[1.02] hover:-translate-y-1 transition-all duration-500">
-            <h4 className="mb-4 text-lg font-semibold text-center transition-colors duration-300 group-hover:text-blue-300 sm:text-xl">
+          <div className="max-w-2xl mx-auto p-8 border border-gray-800 rounded-xl bg-gray-950 group hover:scale-[1.02] hover:-translate-y-1 transition-all duration-500 min-h-[500px]"> {/* Added min-height and increased padding */}
+            <h4 className="mb-6 text-xl font-semibold text-center transition-colors duration-300 group-hover:text-blue-300 sm:text-2xl"> {/* Increased margin and text size */}
               Send Me a Message
             </h4>
             
             {isSent && (
-              <div className="p-3 mb-4 text-sm text-green-400 border border-green-800 rounded-lg bg-green-900/30 sm:text-base">
+              <div className="p-4 mb-6 text-base text-green-400 border border-green-800 rounded-lg bg-green-900/30 sm:text-lg"> {/* Increased padding and text size */}
                 Message sent successfully! I'll get back to you soon.
               </div>
             )}
             
             {error && (
-              <div className="p-3 mb-4 text-sm text-red-400 border border-red-800 rounded-lg bg-red-900/30 sm:text-base">
+              <div className="p-4 mb-6 text-base text-red-400 border border-red-800 rounded-lg bg-red-900/30 sm:text-lg"> {/* Increased padding and text size */}
                 {error}
               </div>
             )}
             
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
+            <form onSubmit={handleSubmit} className="space-y-6"> {/* Increased spacing */}
+              <div className="grid gap-6 sm:grid-cols-2"> {/* Increased gap */}
                 <div className="group/input">
                   <input
                     type="text"
@@ -189,9 +189,9 @@ export default function ContactSection() {
                     onChange={handleChange}
                     placeholder="Your Name"
                     required
-                    className="w-full px-4 py-3 text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50"
+                    className="w-full px-5 py-4 text-lg text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50" // Increased padding and text size
                   />
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 group-hover/input:w-full"></div>
+                  <div className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 group-hover/input:w-full"></div> {/* Increased height */}
                 </div>
                 <div className="group/input">
                   <input
@@ -201,9 +201,9 @@ export default function ContactSection() {
                     onChange={handleChange}
                     placeholder="Your Email"
                     required
-                    className="w-full px-4 py-3 text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50"
+                    className="w-full px-5 py-4 text-lg text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50" // Increased padding and text size
                   />
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 group-hover/input:w-full"></div>
+                  <div className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 group-hover/input:w-full"></div> {/* Increased height */}
                 </div>
               </div>
               <div className="group/input">
@@ -212,32 +212,32 @@ export default function ContactSection() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Your Message"
-                  rows="4"
+                  rows="6" // Increased rows
                   required
-                  className="w-full px-4 py-3 text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50"
+                  className="w-full px-5 py-4 text-lg text-gray-300 transition-all duration-500 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 group-hover/input:scale-[1.03] group-hover/input:-translate-y-1 group-hover/input:shadow-xl group-hover/input:shadow-blue-900/10 group-hover/input:border-blue-500/50" // Increased padding and text size
                 />
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500 group-hover/input:w-full"></div>
+                <div className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-500 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 group-hover/input:w-full"></div> {/* Increased height */}
               </div>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium text-white transition-all duration-500 bg-blue-600 rounded-lg hover:bg-blue-700 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0 group"
+                className="flex items-center justify-center w-full gap-3 px-8 py-4 text-lg font-medium text-white transition-all duration-500 bg-blue-600 rounded-lg hover:bg-blue-700 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0 group" // Increased padding and text size
               >
                 {isLoading ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
+                    <div className="w-6 h-6 border-white rounded-full border-3 border-t-transparent animate-spin"></div> {/* Larger spinner */}
                     Sending...
                   </>
                 ) : (
                   <>
-                    <Send size={18} className="transition-transform duration-300 group-hover:rotate-12" />
+                    <Send size={22} className="transition-transform duration-300 group-hover:rotate-12" /> {/* Larger icon */}
                     Send Message
                   </>
                 )}
               </button>
             </form>
             
-            <p className="mt-4 text-xs text-center text-gray-500 transition-colors duration-300 group-hover:text-gray-400 sm:text-sm">
+            <p className="mt-6 text-base text-center text-gray-500 transition-colors duration-300 group-hover:text-gray-400 sm:text-lg"> {/* Increased margin and text size */}
               I'll respond to your message within 24 hours.
             </p>
           </div>

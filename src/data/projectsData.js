@@ -13,7 +13,7 @@ export const projects = [
       "Flutter app with Firebase Authentication and Firestore allowing users to donate or request blood. Real-time notifications and geolocation features.",
     image: "https://market-resized.envatousercontent.com/previews/files/452243231/RedDot+presentation.jpg?w=590&h=590&cf_fit=crop&crop=top&format=auto&q=85&s=879686b38f5a11ca6a345fa82fbfa1cd8d28ccec63bf303c102b0b3a58dabf17",
     technologies: ["Flutter", "Firebase", "Dart", "Firestore", "Google Maps API"],
-    sourceCode: "https://github.com/yourusername/blood-donation-app",
+    sourceCode: "https://github.com/yashjaiswal4646/Blood-donation-App---Flutter",
   },
   {
     title: "Online Learning Platform (MERN Stack)",

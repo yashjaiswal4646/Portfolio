@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function AboutSection() {
-  // Scroll effect for mobile About section
+  const [visibleParagraphs, setVisibleParagraphs] = useState([]);
+  const sectionRef = useRef(null);
+  const textRefs = useRef([]);
+
+  // Scroll effect for mobile About section (keep your existing effect)
   useEffect(() => {
     const aboutSection = document.getElementById('about-section');
     const aboutText = document.getElementById('mobile-about-text');
@@ -32,8 +36,51 @@ export default function AboutSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // New effect for text animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate paragraphs sequentially when section is visible
+            const paragraphs = [0, 1, 2, 3];
+            paragraphs.forEach((index) => {
+              setTimeout(() => {
+                setVisibleParagraphs(prev => [...prev, index]);
+              }, index * 300); // 300ms delay between each paragraph
+            });
+          } else {
+            // Reset when section leaves viewport
+            setVisibleParagraphs([]);
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Add refs to paragraphs
+  const addToRefs = (el, index) => {
+    if (el && !textRefs.current.includes(el)) {
+      textRefs.current[index] = el;
+    }
+  };
+
   return (
-    <section id="about-section" className="py-20 overflow-x-hidden bg-gray-900">
+    <section id="about-section" ref={sectionRef} className="py-20 overflow-x-hidden bg-gray-900">
       <div className="px-4 mx-auto sm:px-6 max-w-7xl">
         <h3 className="px-2 mb-10 text-2xl font-semibold sm:text-3xl">About Me</h3>
         
@@ -55,19 +102,35 @@ export default function AboutSection() {
                 </div>
                 
                 <div className="space-y-5">
-                  <p className="text-lg leading-relaxed text-gray-300 transition-all duration-500 group-hover:text-gray-200">
+                  <p ref={(el) => addToRefs(el, 0)} className={`text-lg leading-relaxed text-gray-300 transition-all duration-700 ${
+                    visibleParagraphs.includes(0) 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-4'
+                  } group-hover:text-gray-200`}>
                     Hi! I'm <span className="font-bold text-blue-400">Yash Jaiswal</span>, a passionate Full Stack Developer from Rajkot, India.
                   </p>
                   
-                  <p className="text-lg leading-relaxed text-gray-300 transition-all duration-500 delay-75 group-hover:text-gray-200">
+                  <p ref={(el) => addToRefs(el, 1)} className={`text-lg leading-relaxed text-gray-300 transition-all duration-700 delay-100 ${
+                    visibleParagraphs.includes(1) 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-4'
+                  } group-hover:text-gray-200`}>
                     I build responsive and interactive web applications using modern tools like React, Node.js, Express, and MongoDB.
                   </p>
                   
-                  <p className="text-lg leading-relaxed text-gray-300 transition-all duration-500 delay-100 group-hover:text-gray-200">
+                  <p ref={(el) => addToRefs(el, 2)} className={`text-lg leading-relaxed text-gray-300 transition-all duration-700 delay-200 ${
+                    visibleParagraphs.includes(2) 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-4'
+                  } group-hover:text-gray-200`}>
                     I enjoy creating practical software solutions such as management systems, learning platforms, and mobile apps, focusing on clean code and smooth user experiences.
                   </p>
                   
-                  <p className="text-lg leading-relaxed text-gray-300 transition-all duration-500 delay-150 group-hover:text-gray-200">
+                  <p ref={(el) => addToRefs(el, 3)} className={`text-lg leading-relaxed text-gray-300 transition-all duration-700 delay-300 ${
+                    visibleParagraphs.includes(3) 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-4'
+                  } group-hover:text-gray-200`}>
                     Outside of coding, I explore modern UI/UX trends and continuously improve my designs to make them more appealing and engaging.
                   </p>
                 </div>
@@ -98,10 +161,36 @@ export default function AboutSection() {
             {/* Animated text container with scroll effect */}
             <div className="p-6 transition-all duration-500 transform translate-y-8 border border-gray-800 opacity-0 rounded-xl bg-gray-950" 
                  id="mobile-about-text">
-              <p className="text-sm leading-relaxed text-gray-300">
-                Hi! I'm <span className="font-bold text-blue-400">Yash Jaiswal</span>, a passionate Full Stack Developer from Rajkot, India.<br/><br/>
-                I build responsive and interactive web applications using modern tools like React, Node.js, Express, and MongoDB.<br/><br/>
-                I enjoy creating practical software solutions such as management systems, learning platforms, and mobile apps, focusing on clean code and smooth user experiences.<br/><br/>
+              {/* Animated paragraphs for mobile */}
+              <p className={`text-sm leading-relaxed text-gray-300 transition-all duration-700 ${
+                visibleParagraphs.includes(0) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
+                Hi! I'm <span className="font-bold text-blue-400">Yash Jaiswal</span>, a passionate Full Stack Developer from Rajkot, India.
+              </p>
+              
+              <p className={`mt-4 text-sm leading-relaxed text-gray-300 transition-all duration-700 delay-100 ${
+                visibleParagraphs.includes(1) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
+                I build responsive and interactive web applications using modern tools like React, Node.js, Express, and MongoDB.
+              </p>
+              
+              <p className={`mt-4 text-sm leading-relaxed text-gray-300 transition-all duration-700 delay-200 ${
+                visibleParagraphs.includes(2) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
+                I enjoy creating practical software solutions such as management systems, learning platforms, and mobile apps, focusing on clean code and smooth user experiences.
+              </p>
+              
+              <p className={`mt-4 text-sm leading-relaxed text-gray-300 transition-all duration-700 delay-300 ${
+                visibleParagraphs.includes(3) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-4'
+              }`}>
                 Outside of coding, I explore modern UI/UX trends and continuously improve my designs to make them more appealing and engaging.
               </p>
             </div>

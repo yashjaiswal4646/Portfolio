@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const TrailCursor = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const isRunningRef = useRef(true);
-  
+
   // Configuration
   const config = {
     debug: false,
     friction: 0.5,
-    trails: 6,  // Slightly fewer trails
+    trails: 6, // Slightly fewer trails
     size: 50,
     dampening: 0.25,
     tension: 0.98,
@@ -46,7 +46,7 @@ const TrailCursor = () => {
       this.spring = options.spring || 0.4;
       this.friction = config.friction + (Math.random() * 0.01 - 0.002);
       this.nodes = [];
-      
+
       for (let i = 0; i < config.size; i++) {
         const node = new Node();
         node.x = mousePos.current.x;
@@ -58,15 +58,15 @@ const TrailCursor = () => {
     update() {
       let spring = this.spring;
       let node = this.nodes[0];
-      
+
       // Update first node based on mouse position
       node.vx += (mousePos.current.x - node.x) * spring;
       node.vy += (mousePos.current.y - node.y) * spring;
-      
+
       // Update all nodes
       for (let i = 0; i < this.nodes.length; i++) {
         node = this.nodes[i];
-        
+
         if (i > 0) {
           const prevNode = this.nodes[i - 1];
           node.vx += (prevNode.x - node.x) * spring;
@@ -74,15 +74,15 @@ const TrailCursor = () => {
           node.vx += prevNode.vx * config.dampening;
           node.vy += prevNode.vy * config.dampening;
         }
-        
+
         // Apply friction
         node.vx *= this.friction;
         node.vy *= this.friction;
-        
+
         // Update position
         node.x += node.vx;
         node.y += node.vy;
-        
+
         // Reduce spring effect along the line
         spring *= config.tension;
       }
@@ -90,39 +90,42 @@ const TrailCursor = () => {
 
     draw(ctx) {
       if (this.nodes.length < 2) return;
-      
+
       const firstNode = this.nodes[0];
       let currentX = firstNode.x;
       let currentY = firstNode.y;
-      
+
       ctx.beginPath();
       ctx.moveTo(currentX, currentY);
-      
+
       // Draw quadratic curves through nodes
       for (let i = 1; i < this.nodes.length - 2; i++) {
         const node = this.nodes[i];
         const nextNode = this.nodes[i + 1];
-        
+
         const midX = 0.5 * (node.x + nextNode.x);
         const midY = 0.5 * (node.y + nextNode.y);
-        
+
         ctx.quadraticCurveTo(node.x, node.y, midX, midY);
-        
+
         currentX = midX;
         currentY = midY;
       }
-      
+
       // Draw last segment
       const secondLast = this.nodes[this.nodes.length - 2];
       const last = this.nodes[this.nodes.length - 1];
       ctx.quadraticCurveTo(secondLast.x, secondLast.y, last.x, last.y);
-      
+
       ctx.stroke();
     }
   }
 
   // State
-  const mousePos = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const mousePos = useRef({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  });
   const linesRef = useRef([]);
   const oscillatorRef = useRef(null);
   const hueRef = useRef(0);
@@ -131,9 +134,11 @@ const TrailCursor = () => {
   const initLines = () => {
     linesRef.current = [];
     for (let i = 0; i < config.trails; i++) {
-      linesRef.current.push(new Line({ 
-        spring: 0.4 + (i / config.trails) * 0.025 
-      }));
+      linesRef.current.push(
+        new Line({
+          spring: 0.4 + (i / config.trails) * 0.025,
+        }),
+      );
     }
   };
 
@@ -158,29 +163,29 @@ const TrailCursor = () => {
   // Animation render loop
   const render = () => {
     if (!isRunningRef.current || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
+    const ctx = canvas.getContext("2d");
+
     // Clear canvas completely - NO fade effect
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Update oscillator for color cycling
     hueRef.current = oscillatorRef.current?.update() || 0;
-    
+
     // Set drawing style - trails should be subtle
-    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalCompositeOperation = "lighter";
     ctx.strokeStyle = `hsla(${Math.round(hueRef.current)}, 70%, 60%, 0.25)`; // Low opacity
     ctx.lineWidth = 1;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
     // Update and draw all lines
-    linesRef.current.forEach(line => {
+    linesRef.current.forEach((line) => {
       line.update();
       line.draw(ctx);
     });
-    
+
     // Continue animation
     animationRef.current = requestAnimationFrame(render);
   };
@@ -188,11 +193,11 @@ const TrailCursor = () => {
   // Resize handler
   const resizeCanvas = () => {
     if (!canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     // Reinitialize lines after resize
     initLines();
   };
@@ -201,13 +206,13 @@ const TrailCursor = () => {
     // Initialize
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    
+
+    const ctx = canvas.getContext("2d");
+
     // Setup canvas
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     // Initialize oscillator for color animation
     oscillatorRef.current = new Oscillator({
       phase: Math.random() * 2 * Math.PI,
@@ -215,33 +220,33 @@ const TrailCursor = () => {
       frequency: 0.0015,
       offset: 285,
     });
-    
+
     // Initialize lines
     initLines();
-    
+
     // Set initial mouse position to center
     mousePos.current = {
       x: window.innerWidth / 2,
-      y: window.innerHeight / 2
+      y: window.innerHeight / 2,
     };
-    
+
     // Add event listeners
     const handleMove = (e) => handlePointerMove(e);
     const handleTouch = (e) => handleTouchStart(e);
-    
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchmove', handleMove, { passive: false });
-    window.addEventListener('touchstart', handleTouch);
-    window.addEventListener('resize', resizeCanvas);
-    
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("touchmove", handleMove, { passive: false });
+    window.addEventListener("touchstart", handleTouch);
+    window.addEventListener("resize", resizeCanvas);
+
     // IMPORTANT: DO NOT hide the default cursor
     // Keep this line commented out or removed
     // document.body.style.cursor = 'none';
-    
+
     // Start animation
     isRunningRef.current = true;
     render();
-    
+
     // Handle visibility changes
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -254,30 +259,30 @@ const TrailCursor = () => {
         render();
       }
     };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     // Cleanup
     return () => {
       isRunningRef.current = false;
-      
+
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('touchmove', handleMove);
-      window.removeEventListener('touchstart', handleTouch);
-      window.removeEventListener('resize', resizeCanvas);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      
+
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchstart", handleTouch);
+      window.removeEventListener("resize", resizeCanvas);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+
       // IMPORTANT: DO NOT restore cursor (it was never changed)
       // Keep this line commented out or removed
       // document.body.style.cursor = 'auto';
-      
+
       // Clear the canvas one last time
       if (canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d');
+        const ctx = canvasRef.current.getContext("2d");
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       }
     };
@@ -288,7 +293,8 @@ const TrailCursor = () => {
       ref={canvasRef}
       className="fixed top-0 left-0 z-[50] pointer-events-none" // Lower z-index
       style={{
-        mixBlendMode: 'screen',
+        mixBlendMode: "screen",
+        cursor: "none", // Make sure it doesn't change cursor
       }}
     />
   );

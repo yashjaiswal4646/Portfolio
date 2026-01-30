@@ -270,4 +270,14 @@ canvas {
 body, body * {
   cursor: auto !important;
 }
+
+ /* Force pointer cursor for all links and buttons */
+  a, button, [role="button"] {
+    cursor: pointer !important;
+  }
+  
+  /* Ensure project card button has pointer */
+  .project-card-button {
+    cursor: pointer !important;
+  }
 `;
