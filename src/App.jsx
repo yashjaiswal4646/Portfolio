@@ -21,7 +21,7 @@ import { globalStyles } from "./utils/globalStyles";
 export default function App() {
   const [open, setOpen] = useState(false);
   const typedText = useTyping(
-    "I build full-stack applications using React, Node.js, Express, and MongoDB."
+    "  I build Full-Stack applications using React, Node.js, Express and MongoDB."
   );
 
   // Prevent body scrolling when drawer is open
