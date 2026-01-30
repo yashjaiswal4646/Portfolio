@@ -4,7 +4,7 @@ export default function useTyping(text, speed = 50) {
   const [displayed, setDisplayed] = useState("");
   
   useEffect(() => {
-    setDisplayed(""); // Reset
+    setDisplayed(""); // Reset when text changes
     let i = 0;
     
     const timer = setInterval(() => {

@@ -1,7 +1,15 @@
 import React from 'react';
-import { User, Code, Folder, GraduationCap, Mail } from 'lucide-react';  // Import icons
+import { Home, User, Code, Folder, GraduationCap, Mail } from 'lucide-react';  // Import icons
 
 const MobileDrawer = ({ open, setOpen }) => {
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <>
       {/* Backdrop */}
@@ -37,6 +45,16 @@ const MobileDrawer = ({ open, setOpen }) => {
         </div>
 
         <nav className="flex flex-col p-4 space-y-4">
+          <button
+            onClick={() => {
+              scrollToTop();
+              setOpen(false);
+            }}
+            className="flex items-center space-x-3 text-left text-gray-100 transition-colors duration-300 hover:text-blue-400"
+          >
+            <Home size={20} />
+            <span>Home</span>
+          </button>
           <a
             href="#about"
             className="flex items-center space-x-3 text-gray-100 transition-colors duration-300 hover:text-blue-400"

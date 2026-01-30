@@ -45,7 +45,7 @@ export default function Footer() {
                 },
                 {
                   icon: <Instagram size={24} />,
-                  href: "https://instagram.com",
+                  href: "https://www.instagram.com/_yash___jaiswal/",
                   label: "Instagram",
                 },
                 {

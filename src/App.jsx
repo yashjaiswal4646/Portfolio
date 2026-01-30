@@ -37,6 +37,14 @@ export default function App() {
     };
   }, [open]);
 
+  // Scroll to top function for Home link
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden font-sans text-gray-100 bg-gray-950">
       {/* Global Styles */}
@@ -52,6 +60,12 @@ export default function App() {
 
           {/* Desktop Menu */}
           <div className="hidden space-x-6 text-sm md:flex">
+            <button
+              onClick={scrollToTop}
+              className="transition-colors duration-300 hover:text-blue-400 hover:scale-110"
+            >
+              Home
+            </button>
             <a
               href="#about-section"
               className="transition-colors duration-300 hover:text-blue-400 hover:scale-110"
