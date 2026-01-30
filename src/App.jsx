@@ -141,7 +141,7 @@ export default function App() {
               Hire Me
             </a>
             <a
-              href="/resume.pdf"
+              href="/CV_Resume.pdf"
               download
               className="w-3/4 px-4 py-3 text-sm text-center border border-gray-700 rounded-lg sm:w-auto sm:px-6 hover:bg-gray-800 sm:text-base"
             >
